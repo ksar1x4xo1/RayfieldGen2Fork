@@ -110,7 +110,7 @@ VerticalAlignment.Center,SortOrder=Enum.SortOrder.LayoutOrder,Parent=p})n.collap
 'Title',Text=n.showName,Size=UDim2.new(1,0,0,16),BackgroundTransparency=1,FontFace=g.brandFont(Enum.FontWeight.Medium),
 RichText=true,TextSize=16,TextWrapped=true,TextXAlignment=Enum.TextXAlignment.Left,LayoutOrder=1,ZIndex=i.zIndex.
 restoreContent,TextTransparency=1,Parent=p},{TextColor3='TitlingColor'})n.collapsedSubtitle=n:Create('TextLabel',{Name=
-'Subtitle',Text='',Visible=false,Size=UDim2.new(1,0,0,14),BackgroundTransparency=1,FontFace=g.brandFont(Enum.FontWeight.
+'Subtitle',Text=j.t'Tap to show',Size=UDim2.new(1,0,0,14),BackgroundTransparency=1,FontFace=g.brandFont(Enum.FontWeight.
 Medium),TextSize=14,TextXAlignment=Enum.TextXAlignment.Left,LayoutOrder=2,ZIndex=i.zIndex.restoreContent,
 TextTransparency=1,Parent=p},{TextColor3='TitlingColor'})n.collapsedInteract=n:Create('TextButton',{Name=
 'CollapsedInteract',BackgroundTransparency=1,Size=UDim2.fromScale(1,1),Text='',TextTransparency=1,Visible=false,ZIndex=i
@@ -1860,9 +1860,9 @@ if Q:IsA'Frame'then f.tweenService:Create(Q.ImageLabel,L,{ImageTransparency=1}):
 _setShown(false,L)end for P,Q in pairs(I.tabs)do if not Q.neglectSelector and Q.topbarItem then Q:_applyVisual('hidden',
 L)end end I:_setTabSectionsShown(false,L)I:_fadeSelectedElementsOut()local P=f.tweenService:Create(I.main,M,{Size=K,
 Position=J})P.Completed:Connect(function()if I.unloaded or not I.hidden then return end I._collapsedShown=true D(I,true)
-I.collapsedInteract.Visible=true I.animating=false I._revealing=false end)P:Play()f.tweenService:Create(I.windowCorner,N
+I.collapsedInteract.Visible=false I.main.Visible=false I.animating=false I._revealing=false end)P:Play()f.tweenService:Create(I.windowCorner,N
 ,{CornerRadius=UDim.new(1,0)}):Play()task.delay(0.18,function()if not I.hidden then return end I.topbar.Visible=false I:
-_setContentVisible(false)c.setCollapsedShown(I,true,O)end)end function h.ToggleHide(I)if I.animating then return end if
+_setContentVisible(false)c.setCollapsedShown(I,false,O)end)end function h.ToggleHide(I)if I.animating then return end if
 I.hidden then I:Show()else I:Hide()end end function h.ToggleMinimise(I)if I.animating or I.hidden then return end if I.
 _searching then d.close(I,{showTabs=true})end I.animating=true local J,K=TweenInfo.new(0.5,Enum.EasingStyle.Exponential,
 Enum.EasingDirection.Out),TweenInfo.new(0.4,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out)if I.minimised then I.
@@ -1975,7 +1975,7 @@ M.AbsolutePosition.Y local O,P,Q=N+M.AbsoluteWindowSize.Y,math.floor(K/J),0 for 
 main.AbsolutePosition.Y local U=(T+S.main.AbsoluteSize.Y)>N and T<O if U then S:_setShown(true,true)Q+=1 if Q<=P then
 task.wait(J)end else S:_setShown(true,false)end end end function h.Show(I)if I.animating or not I.hidden then return end
 I.animating=true I._revealing=true if I.configuration.autoLoad and not I._autoLoaded then I._autoLoaded=true local J,K=
-pcall(I.Load,I)if not J then ak.warn('Rayfield: Failed to load configuration - '..tostring(K))end end I.hidden=false I.
+pcall(I.Load,I)if not J then ak.warn('Rayfield: Failed to load configuration - '..tostring(K))end end I.hidden=false I.main.Visible=true I.
 minimised=false if I._themeRefreshPending then I._themeRefreshPending=false I:_refreshElementThemes()end I.
 collapsedInteract.Visible=false if I._freeMouse then I._freeMouse()end if I.hasShownOnce then I:_quickRestore()else I.
 hasShownOnce=true I:_firstShow()end end function h._quickRestore(I)local J=I:_clampedPosition(I._restorePosition or
