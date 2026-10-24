@@ -103,7 +103,7 @@ HapticEngine),{},5 function l.buildCollapsedFace(n)local o=n.showIconOnly n.coll
 'CollapsedIcon',AnchorPoint=if o then Vector2.new(0.5,0.5)else Vector2.new(0,0.5),Position=if o then UDim2.fromScale(0.5
 ,0.5)else UDim2.new(0,16,0.5,0),Size=UDim2.fromOffset(24,24),BackgroundTransparency=1,Image=n.showIcon,ZIndex=i.zIndex.
 restoreContent,ImageTransparency=1,Parent=n.main},{ImageColor3='TitlingColor'})n:Create('UICorner',{Parent=n.
-collapsedIcon},{CornerRadius='PillCornerRadius'})local p=n:Create('Frame',{Name='CollapsedText',Visible=not o,
+collapsedIcon},{CornerRadius='PillCornerRadius'})local p=n:Create('Frame',{Name='CollapsedText',Visible=false,
 AnchorPoint=Vector2.new(0,0.5),Position=UDim2.new(0,50,0.5,0),Size=UDim2.new(1,-60,0,32),BackgroundTransparency=1,ZIndex
 =i.zIndex.restoreContent,Parent=n.main})n:Create('UIListLayout',{Padding=UDim.new(0,1),VerticalAlignment=Enum.
 VerticalAlignment.Center,SortOrder=Enum.SortOrder.LayoutOrder,Parent=p})n.collapsedTitle=n:Create('TextLabel',{Name=
@@ -126,7 +126,7 @@ not n.hidden or n.animating then p=false return end local u=o:GetMouseLocation()
 return end q=true local v=u+r+t()n.main.Position=UDim2.fromOffset(v.X,v.Y)end)end function l.isNewUser()local n=g.
 localPlayer if not n then return false end if typeof(h.isfile)~='function'or typeof(h.writefile)~='function'then return
 true end local o,p,q=g.fileSystemManager:getPath'lastuser.txt',tostring(n.UserId),true pcall(function()if h.isfile(o)
-then q=h.readfile(o)~=p end end)pcall(function()h.writefile(o,p)end)return q end function l.setCollapsedShown(n,o,p)
+then q=h.readfile(o)~=p end end)pcall(function()h.writefile(o,p)end)return q end function l.setCollapsedShown(n,o,p)n.collapsedIcon.Visible=false n.collapsedTitle.Visible=false n.collapsedSubtitle.Visible=false n.collapsedInteract.Visible=false 
 local q={[n.collapsedIcon]={ImageTransparency=if o then 0 else 1}}if not n.showIconOnly then q[n.collapsedTitle]={
 TextTransparency=if o then 0 else 1}q[n.collapsedSubtitle]={TextTransparency=if o then 0.5 else 1}end for r,s in q do if
 p then g.tweenService:Create(r,p,s):Play()else for t,u in s do r[t]=u end end end end return l end)()end,[6]=function()
@@ -1848,7 +1848,7 @@ function h.Popup(I,J)if I.unloaded then return end return ac(ab.Parent.popup).ne
 animating or I.hidden then return end if I._searching then d.close(I,{showTabs=false,jumpTo=I.selectedTab and I.
 selectedTab.tabPage})end if I._recordingKeybind then I._recordingKeybind:_stopRecording()end I.animating=true I.
 _revealing=true I.hidden=true I.collapsedInteract.Visible=false if I.minimised then I.minimised=false af.assign(I.
-minimiseAction.iconLabel,'Image',ai.icons.minimise)end I._restorePosition=I.main.Position local J,K=I:_collapsedRect()
+minimiseAction.iconLabel,'Image',ai.icons.minimise)end I._restorePosition=I.main.Position I.main.Visible=false local J,K=I:_collapsedRect()
 local L,M,N,O=TweenInfo.new(0.18,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),TweenInfo.new(0.35,Enum.EasingStyle.
 Exponential,Enum.EasingDirection.InOut),TweenInfo.new(0.35,Enum.EasingStyle.Exponential,Enum.EasingDirection.InOut),
 TweenInfo.new(0.2,Enum.EasingStyle.Quint,Enum.EasingDirection.Out)f.tweenService:Create(I.drag.dragCosmetic,L,{Size=
@@ -1859,10 +1859,10 @@ tweenService:Create(I.topbarIcon,L,{ImageTransparency=1}):Play()end for P,Q in i
 if Q:IsA'Frame'then f.tweenService:Create(Q.ImageLabel,L,{ImageTransparency=1}):Play()end end for P,Q in I.tags do Q:
 _setShown(false,L)end for P,Q in pairs(I.tabs)do if not Q.neglectSelector and Q.topbarItem then Q:_applyVisual('hidden',
 L)end end I:_setTabSectionsShown(false,L)I:_fadeSelectedElementsOut()local P=f.tweenService:Create(I.main,M,{Size=K,
-Position=J})P.Completed:Connect(function()if I.unloaded or not I.hidden then return end I._collapsedShown=true D(I,true)
-I.collapsedInteract.Visible=false I.main.Visible=false I.animating=false I._revealing=false end)P:Play()f.tweenService:Create(I.windowCorner,N
+Position=J})P.Completed:Connect(function()if I.unloaded or not I.hidden then return end I._collapsedShown=false D(I,true)
+I.collapsedInteract.Visible=false I.animating=false I._revealing=false end)P:Play()f.tweenService:Create(I.windowCorner,N
 ,{CornerRadius=UDim.new(1,0)}):Play()task.delay(0.18,function()if not I.hidden then return end I.topbar.Visible=false I:
-_setContentVisible(false)c.setCollapsedShown(I,false,O)end)end function h.ToggleHide(I)if I.animating then return end if
+_setContentVisible(false)c.setCollapsedShown(I,true,O)end)end function h.ToggleHide(I)if I.animating then return end if
 I.hidden then I:Show()else I:Hide()end end function h.ToggleMinimise(I)if I.animating or I.hidden then return end if I.
 _searching then d.close(I,{showTabs=true})end I.animating=true local J,K=TweenInfo.new(0.5,Enum.EasingStyle.Exponential,
 Enum.EasingDirection.Out),TweenInfo.new(0.4,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out)if I.minimised then I.
@@ -1975,7 +1975,7 @@ M.AbsolutePosition.Y local O,P,Q=N+M.AbsoluteWindowSize.Y,math.floor(K/J),0 for 
 main.AbsolutePosition.Y local U=(T+S.main.AbsoluteSize.Y)>N and T<O if U then S:_setShown(true,true)Q+=1 if Q<=P then
 task.wait(J)end else S:_setShown(true,false)end end end function h.Show(I)if I.animating or not I.hidden then return end
 I.animating=true I._revealing=true if I.configuration.autoLoad and not I._autoLoaded then I._autoLoaded=true local J,K=
-pcall(I.Load,I)if not J then ak.warn('Rayfield: Failed to load configuration - '..tostring(K))end end I.hidden=false I.main.Visible=true I.
+pcall(I.Load,I)if not J then ak.warn('Rayfield: Failed to load configuration - '..tostring(K))end end I.hidden=false I.
 minimised=false if I._themeRefreshPending then I._themeRefreshPending=false I:_refreshElementThemes()end I.
 collapsedInteract.Visible=false if I._freeMouse then I._freeMouse()end if I.hasShownOnce then I:_quickRestore()else I.
 hasShownOnce=true I:_firstShow()end end function h._quickRestore(I)local J=I:_clampedPosition(I._restorePosition or
